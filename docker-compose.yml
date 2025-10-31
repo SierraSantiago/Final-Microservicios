@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  nats:
+    image: ${NATS_IMAGE}
+    ports:
+      - "${NATS_PORT}:${NATS_PORT}"
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "${API_GATEWAY_PORT}:${API_GATEWAY_PORT}"
+    depends_on:
+      - nats
+    environment:
+      - NATS_SERVERS=${NATS_URL}
+
+  auth-service:
+    build: ./auth-service
+    depends_on:
+      - nats
+    environment:
+      - NATS_SERVERS=${NATS_URL}
+
+  discipline-service:
+    build: ./discipline-service
+    depends_on:
+      - nats
+    environment:
+      - NATS_SERVERS=${NATS_URL}
+
+  report-service:
+    build: ./report-service
+    depends_on:
+      - nats
+    environment:
+      - NATS_SERVERS=${NATS_URL}
+
+  victim-service:
+    build: ./victim-service
+    depends_on:
+      - nats
+    environment:
+      - NATS_SERVERS=${NATS_URL}

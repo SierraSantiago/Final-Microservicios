@@ -1,0 +1,39 @@
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Builds
+dist/
+coverage/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Docker
+*.pid
+*.seed
+*.backup
+docker-compose.override.yml
+
+# IDE / Editor configs
+.vscode/
+.idea/
+*.swp
+
+# TypeScript
+*.tsbuildinfo
+
+

@@ -1,10 +1,13 @@
 version: '3.9'
 
 services:
+  #  NATS (mensajería)
   nats:
     image: ${NATS_IMAGE}
     ports:
       - "${NATS_PORT}:${NATS_PORT}"
+
+  # API Gateway
 
   api-gateway:
     build: ./api-gateway
@@ -15,6 +18,7 @@ services:
     environment:
       - NATS_SERVERS=${NATS_URL}
 
+  # Auth Service
   auth-service:
     build: ./auth-service
     depends_on:
@@ -22,12 +26,24 @@ services:
     environment:
       - NATS_SERVERS=${NATS_URL}
 
+  # Discipline Service
+
   discipline-service:
     build: ./discipline-service
     depends_on:
       - nats
+      - discipline-db
     environment:
       - NATS_SERVERS=${NATS_URL}
+      - DB_HOST=${DISCIPLINE_DB_HOST}
+      - DB_PORT=${DISCIPLINE_DB_PORT}
+      - DB_USER=${DISCIPLINE_DB_USER}
+      - DB_PASS=${DISCIPLINE_DB_PASS}
+      - DB_NAME=${DISCIPLINE_DB_NAME}
+      - DATABASE_URL=${DISCIPLINE_DATABASE_URL}
+
+ 
+  # Report Service
 
   report-service:
     build: ./report-service
@@ -36,9 +52,31 @@ services:
     environment:
       - NATS_SERVERS=${NATS_URL}
 
+
+  #  Victim Service
+
   victim-service:
     build: ./victim-service
     depends_on:
       - nats
     environment:
       - NATS_SERVERS=${NATS_URL}
+
+  # PostgreSQL (Discipline DB)
+  discipline-db:
+    image: postgres:16
+    container_name: discipline_db
+    restart: always
+    environment:
+      POSTGRES_DB: ${DISCIPLINE_DB_NAME}
+      POSTGRES_USER: ${DISCIPLINE_DB_USER}
+      POSTGRES_PASSWORD: ${DISCIPLINE_DB_PASS}
+    ports:
+      - "${DISCIPLINE_DB_EXTERNAL_PORT}:${DISCIPLINE_DB_PORT}"
+    volumes:
+      - discipline_data:/var/lib/postgresql/data
+
+
+# Volúmenes persistentes
+volumes:
+  discipline_data:

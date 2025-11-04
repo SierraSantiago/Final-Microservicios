@@ -1,3 +1,5 @@
+/* eslint-disable */            // desactiva todo el archivo
+/* eslint-disable regla-x */    // archivo completo para una regla
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Transport } from '@nestjs/microservices';

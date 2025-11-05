@@ -14,6 +14,6 @@ async function bootstrap() {
   });
 
   await app.listen();
-  console.log('✅ Microservicio AUTH escuchando en NATS');
+  console.log('✅ Microservicio Discipline escuchando en NATS');
 }
 bootstrap();

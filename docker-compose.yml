@@ -16,7 +16,7 @@ services:
     depends_on:
       - nats
     environment:
-      - NATS_SERVERS=${NATS_URL}
+      - NATS_URL=${NATS_URL}
 
   # Auth Service
   auth-service:
@@ -24,7 +24,7 @@ services:
     depends_on:
       - nats
     environment:
-      - NATS_SERVERS=${NATS_URL}
+      - NATS_URL=${NATS_URL}
 
   # Discipline Service
 
@@ -34,7 +34,7 @@ services:
       - nats
       - discipline-db
     environment:
-      - NATS_SERVERS=${NATS_URL}
+      - NATS_URL=${NATS_URL}
       - DB_HOST=${DISCIPLINE_DB_HOST}
       - DB_PORT=${DISCIPLINE_DB_PORT}
       - DB_USER=${DISCIPLINE_DB_USER}
@@ -50,7 +50,7 @@ services:
     depends_on:
       - nats
     environment:
-      - NATS_SERVERS=${NATS_URL}
+      - NATS_URL=${NATS_URL}
 
 
   #  Victim Service
@@ -60,7 +60,7 @@ services:
     depends_on:
       - nats
     environment:
-      - NATS_SERVERS=${NATS_URL}
+      - NATS_URL=${NATS_URL}
 
   # PostgreSQL (Discipline DB)
   discipline-db:

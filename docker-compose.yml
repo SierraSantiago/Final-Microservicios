@@ -1,11 +1,10 @@
-version: '3.9'
-
 services:
   #  NATS (mensajería)
   nats:
-    image: ${NATS_IMAGE}
+    image: nats:latest
     ports:
-      - "${NATS_PORT}:${NATS_PORT}"
+      - "4222:4222"   # puerto de mensajería
+      - "8222:8222"
 
   # API Gateway
 
@@ -68,9 +67,9 @@ services:
     container_name: discipline_db
     restart: always
     environment:
-      POSTGRES_DB: ${DISCIPLINE_DB_NAME}
-      POSTGRES_USER: ${DISCIPLINE_DB_USER}
-      POSTGRES_PASSWORD: ${DISCIPLINE_DB_PASS}
+      POSTGRES_DB: discipline
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
     ports:
       - "${DISCIPLINE_DB_EXTERNAL_PORT}:${DISCIPLINE_DB_PORT}"
     volumes:
